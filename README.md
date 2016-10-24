@@ -36,3 +36,6 @@ It will display a website for an item catalog which will allow users to log in a
 3.  Navigate to the directory containing the repository.
 4.  Enter "python catalog.py" in the server terminal window.
 5.  Open a web browser and enter http://localhost:8000 in the URL box.
+
+##Note on Authorship:
+Code used in this lesson was created in part from the Udacity Full Stack Foundations coursework.  Additionally, code snippets used for Facebook and Google user login was obtained from the respective API documentation and examples.
