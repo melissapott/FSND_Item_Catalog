@@ -1,0 +1,28 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+
+{% if category.icon %}
+	<img src="/uploads/{{category.icon}}" alt="image for {{category.name}}" style="max-width:100px"></img>
+{% endif %}
+<h1>Edit the {{category.name}} Category</h1>
+<form action="#" method="post" enctype=multipart/form-data>
+	<div class="form-group">
+		<label for="name">Name: </label>
+		<input type="text" name="name" value="{{category.name}}">
+	</div>
+	<div class="form-group">
+		<label for="description">Description</label>
+		<textarea class="form-control" rows="5" name="description">
+			{{ category.description }}
+		</textarea>
+	</div>
+	<div class="form-group">
+		<label for="userfilename">Icon Image: </label>
+		<input type="file" name="userfilename" value="{{category.icon}}">
+	</div>
+	<input type="submit" value="Confirm Edit" class="btn btn-default">
+</form>
+<a href="{{url_for('home')}}" class="btn btn-default">Cancel</a>
+
+{% endblock %}

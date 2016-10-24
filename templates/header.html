@@ -1,0 +1,40 @@
+<div class="top row">
+	<div class="col-sm-4 home">
+		<a href="{{url_for('home')}}" class="btn btn-default">
+			<span class="glyphicon glyphicon-home"></span>
+			home
+		</a>
+	</div>
+	<div class="col-sm-4 user" align="center">
+		<!-- Determine if the user is logged in or not, and show appropriate link -->
+		{% if 'username' in session %}
+			<span class="glyphicon glyphicon-user"></span>
+			{{ session.username }}
+		{% endif %}
+	</div>
+	<div class="col-sm-4 login" align="right">
+		{% if 'username' in session %}
+			<a href="{{url_for('logout')}}" class="btn btn-default">
+				<span class="glyphicon glyphicon-log-out"></span>
+				Log Out
+			</a>
+		{% else %}
+			<a href="{{url_for('showLogin')}}" class="btn btn-default">
+				<span class="glyphicon glyphicon-log-in"></span>
+				log in
+			</a>
+		{% endif %}
+	</div>
+</div>
+<div class="banner"></div>
+
+<div class='flash'>
+	{% with messages = get_flashed_messages() %}
+		{% if messages %}
+			{% for message in messages %}
+				<strong> {{ message }} </strong><br>
+			{% endfor %}
+		{% endif %}
+	{% endwith %}
+<hr>
+</div>

@@ -1,0 +1,54 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+
+<div class="row">
+	<div class="col-sm-2">
+		{% if category.icon %}
+		<img src="/uploads/{{category.icon}}" alt="image for {{category.name}}" style="max-width:100px"></img>
+		{% endif %}
+	</div>
+	<div class="col-sm-8" style="text-align: center">
+		<div class="row full-row title-row">
+			<h1>{{category.name}}</h1>
+		</div>
+		<div class="row full-row">
+			{% if user_status == 'creator' %}
+				<a href="{{url_for('editCategory', category_id=category.id)}}" class="btn btn-default btn-xs">Edit</a>
+				<a href="{{url_for('deleteCategory', category_id=category.id)}}" class="btn btn-default btn-xs">Delete</a>
+			{% endif %}
+		</div>
+	</div>
+	<div class="col-sm-2">
+	</div>
+</div>
+
+<hr>
+
+{% for i in items %}
+	<div class="row item-list">
+		<div class="col-sm-4">
+			{% if i.image %}
+				<img src="/uploads/{{i.image}}" alt="image for {{i.name}}" style="max-width:100px"></img>
+			{% endif %}
+		</div>
+		<div class="col.sm-8">
+			<a href="{{url_for('itemDetail', item_id=i.id)}}">
+				<h2>{{i.name}}</h2>
+			</a>
+		</div>
+	</div>
+{% else %}
+	<div class="row full-row">
+		<h2>Sorry, there's nothing to show here right now.</h2>
+	</div>
+{% endfor %}
+
+{% if user_status != 'guest' %}
+	<div class="row full-row">
+		<a href="{{url_for('addItem', category_id=category.id)}}">
+			add a new item
+		</a><br>
+	</div>
+{% endif %}
+{% endblock %}

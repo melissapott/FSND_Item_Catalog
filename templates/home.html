@@ -1,0 +1,31 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+<div class="row full-row title-row">
+	<h2>Browse Categories</h2>
+</div>
+<div class="row full-row">
+	{% if user_status != 'guest' %}
+		<a href="{{url_for('addCategory')}}" class="btn btn-default btn-xs">Add Category</a>
+	{% endif %}
+</div>
+
+{% for c in categories %}
+	<a href="{{url_for('itemsByCategory',category_id=c.id)}}" class="row">
+		<div class="col-sm-2">
+			{% if c.icon %}
+				<img src="/uploads/{{c.icon}}" alt="icon for {{c.name}}" style="max-width:50px"></img>
+			{% endif %}
+		</div>
+		<div class="col-sm-10">
+			<h3>{{c.name}}</h3>
+		</div>
+		<div class="row description">
+			<p>{{c.description}}</p>
+		</div>
+	</a>
+{% else %}
+	<h2>Sorry, there's nothing to show here right now.</h2>
+{% endfor %}
+
+{% endblock %}
