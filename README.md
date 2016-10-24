@@ -35,4 +35,4 @@ It will display a website for an item catalog which will allow users to log in a
 2.  Start the virtual webserver and log in to it.
 3.  Navigate to the directory containing the repository.
 4.  Enter "python catalog.py" in the server terminal window.
-5.  Open a web browser and enter http://localhost:8000 in the URL box.# FSND_Item_Catalog
+5.  Open a web browser and enter http://localhost:8000 in the URL box.
