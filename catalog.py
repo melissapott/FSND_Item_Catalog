@@ -20,6 +20,7 @@ from flask import send_from_directory
 
 app = Flask(__name__)
 
+
 # image uploads
 # image upload folder and allowable file extensions
 UPLOAD_FOLDER = 'images'
@@ -59,9 +60,15 @@ def uploadFile(userfile):
     else:
         return None
 
+
+# check to see if an uploaded file exists, and if so, delete it
+def deleteFile(filename):
+    if filename:
+        if os.path.isfile(UPLOAD_FOLDER + '/' + filename):
+            os.remove(UPLOAD_FOLDER + '/' + filename)
+
+
 # for displaying an uploaded file
-
-
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'],
@@ -159,8 +166,17 @@ def deleteCategory(category_id):
         flash('You must be logged in as author of this category to edit it.')
         return redirect(url_for('itemsByCategory', category_id=category_id))
 
+    # delete the associated image from the server and then
     # delete the selected record from the database
     if request.method == 'POST':
+        deleteFile(category.icon)
+
+        # child items records will be deleted by cascade, but delete their
+        # associated image files as well
+        items = session.query(Item).filter_by(category_id=category_id).all()
+        for i in items:
+            deleteFile(i.image)
+
         session.delete(category)
         session.commit()
         flash("The category has been deleted.")
@@ -257,8 +273,10 @@ def deleteItem(item_id):
         flash('Only the creator of an item may delete it.')
         return redirect(url_for('itemDetail', item_id=item_id))
 
+    # delete the associated image from the server and
     # delete the record from the database
     if request.method == 'POST':
+        deleteFile(item.image)
         session.delete(item)
         session.commit()
         flash("Item has been deleted.")
